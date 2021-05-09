@@ -1,0 +1,25 @@
+{
+  "name": "codemirror",
+  "version": "1.0.0",
+  "description": "code sharing for teachers",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tch1001/codemirror.git"
+  },
+  "author": "tan chien hao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tch1001/codemirror/issues"
+  },
+  "homepage": "https://github.com/tch1001/codemirror#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
