@@ -17,14 +17,13 @@
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script>
 	function connect(){
-		console.log('connectin to server')
-		var socket = io('ws://localhost:3000');
-		socket.on('connect', () => {
-			socket.send("start");
-			socket.emit("start");
-		});
+		console.log('connecting to server')
+		var socket = io();
+		socket.emit('sessId', '<%= sessId %>');
 	}
 </script>
+<body onload='connect()'>
+<h1>harlo <%= sessId %></h1>
 <div style="width: 50%; float: left; background-color: Aqua;">
 	<textarea id=demotext>
 <!-- Create a simple CodeMirror instance -->
@@ -48,3 +47,4 @@
 	<button value="Run code" onclick='connect()'>Run Code</button><br>
 	Code output 
 </div>
+</body>
