@@ -8,7 +8,7 @@ CodeMirror aims to be an open-source teaching resource. It will consist of:
 ## how to run
 Run the following commands
 ```
-git clone https://github.com/tch1001/codemirror`
+git clone https://github.com/tch1001/codemirror
 npm install
 node index.js
 ```

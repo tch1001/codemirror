@@ -14,6 +14,17 @@
 	.CodeMirror pre { padding-left: 7px; line-height: 1.25; }
 	.banner { background: #ffc; padding: 6px; border-bottom: 2px solid silver; text-align: center }
 </style>
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script>
+	function connect(){
+		console.log('connectin to server')
+		var socket = io('ws://localhost:3000');
+		socket.on('connect', () => {
+			socket.send("start");
+			socket.emit("start");
+		});
+	}
+</script>
 <div style="width: 50%; float: left; background-color: Aqua;">
 	<textarea id=demotext>
 <!-- Create a simple CodeMirror instance -->
@@ -34,6 +45,6 @@
 	</script>
 </div>
 <div style="margin-left: 220px; background-color: Silver;"> 
-	<button value="Run code">Run Code</button><br>
+	<button value="Run code" onclick='connect()'>Run Code</button><br>
 	Code output 
 </div>
