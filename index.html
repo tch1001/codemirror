@@ -1,0 +1,39 @@
+<html>
+
+<title>CodeMirror</title>
+<meta charset="utf-8"/>
+
+<link rel=stylesheet href="lib/codemirror.css">
+<script src="lib/codemirror.js"></script>
+<script src="mode/xml/xml.js"></script>
+<script src="mode/javascript/javascript.js"></script>
+
+<style>
+	.CodeMirror { height: 100%; border: 1px solid #ddd; }
+	.CodeMirror-scroll { max-height: 100%; }
+	.CodeMirror pre { padding-left: 7px; line-height: 1.25; }
+	.banner { background: #ffc; padding: 6px; border-bottom: 2px solid silver; text-align: center }
+</style>
+<div style="width: 50%; float: left; background-color: Aqua;">
+	<textarea id=demotext>
+<!-- Create a simple CodeMirror instance -->
+<link rel="stylesheet" href="lib/codemirror.css">
+<script src="lib/codemirror.js"></script>
+<script>
+	var editor = CodeMirror.fromTextArea(myTextarea, {
+		lineNumbers: true
+	});
+</script>
+	</textarea>
+	<script>
+		var editor = CodeMirror.fromTextArea(document.getElementById("demotext"), {
+			lineNumbers: true,
+			mode: "text/html",
+			matchBrackets: true
+		});
+	</script>
+</div>
+<div style="margin-left: 220px; background-color: Silver;"> 
+	<button value="Run code">Run Code</button><br>
+	Code output 
+</div>
