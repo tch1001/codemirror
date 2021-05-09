@@ -3,8 +3,8 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-app.use('/lib', express.static('lib'))
-app.use('/mode', express.static('mode'))
+app.use('/lib', express.static('static/lib'))
+app.use('/mode', express.static('static/mode'))
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname,'views'))
 
