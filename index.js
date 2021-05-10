@@ -62,7 +62,6 @@ io.on('connection', (client) => {
 	});
 	client.on('run', () => {
 		sessId = clientSessionMap[client.id];
-		console.log(code[sessId]);
 	});
 	client.on('help', () => {
 		sessId = clientSessionMap[client.id];
