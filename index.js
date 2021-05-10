@@ -36,6 +36,8 @@ io.on('connection', (client) => {
 		else sessionClientCounter[sessId] = 1;
 		needHelp[sessId] = false;
 
+		if(code[sessId]) client.emit('newCode', {code: code[sessId]});
+
 		client.join(sessId)
 	});
 	// client wants to update code
