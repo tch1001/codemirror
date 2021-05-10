@@ -56,7 +56,7 @@ io.on('connection', (client) => {
 		sessionClientCounter[sessId] -= 1;
 		delete clientSessionMap[client.id];
 		if(sessionClientCounter[sessId] == 0){
-			delete code[sessId];
+//			delete code[sessId];
 			delete needHelp[sessId];
 		}
 	});

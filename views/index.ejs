@@ -127,6 +127,7 @@
 			console.log('success');
 		},
 			function(err){
+				output.innerHTML += '<tagname style="color:red">'+ err +'</tagname>' + '<br>';
 				console.log(err);
 		});
 		socket.emit('run', (data)=>{
