@@ -3,10 +3,10 @@
 <title>CodeMirror</title>
 <meta charset="utf-8"/>
 
-<link rel=stylesheet href="lib/codemirror.css">
-<script src="lib/codemirror.js"></script>
-<script src="mode/xml/xml.js"></script>
-<script src="mode/javascript/javascript.js"></script>
+<link rel=stylesheet href="/lib/codemirror.css">
+<script src="/lib/codemirror.js"></script>
+<script src="/mode/xml/xml.js"></script>
+<script src="/mode/javascript/javascript.js"></script>
 
 <style>
 	.CodeMirror { height: 100%; border: 1px solid #ddd; }
@@ -16,7 +16,7 @@
 </style>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="js/jquery.caret.js"></script>
+<script src="/js/jquery.caret.js"></script>
 <script>
 	var socket;
 	var editor; 
@@ -24,6 +24,7 @@
 	function connect(){
 		editor = CodeMirror.fromTextArea(document.getElementById('demotext'), { lineNumbers: true });
 		socket = io();
+		console.log("session id: ", '<%= sessId %>');
 		socket.emit('sessId', '<%= sessId %>');
 		socket.on('newCode', (data) => {
 			editor.setValue(data['code']);
@@ -31,7 +32,6 @@
 		});
 
 		function keyhandler(){
-			console.log('bruh');
 			setTimeout(function(){
 				cursor = editor.getCursor();
 				updateCode();
@@ -54,6 +54,11 @@
 	}
 	function retrieveCode(){
 		socket.emit('retrieveCode');
+	}
+	function runCode(){
+		socket.emit('run', (data)=>{
+			console.log(data)
+		});
 	}
 	function setSelectionRange(input, selectionStart, selectionEnd) {
 		if (input.setSelectionRange) {
@@ -78,7 +83,7 @@
 	<textarea id='demotext'>
 <!-- Create a simple CodeMirror instance -->
 <link rel="stylesheet" href="lib/codemirror.css">
-<script src="lib/codemirror.js"></script>
+<script src="/lib/codemirror.js"></script>
 	</textarea>
 </div>
 <div style="margin-left: 220px; background-color: Silver;"> 

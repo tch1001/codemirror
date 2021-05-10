@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/tch1001/codemirror#readme",
   "dependencies": {
+    "docker-python-sandbox": "^0.0.7",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "socket.io": "^4.0.2"

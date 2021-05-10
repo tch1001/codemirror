@@ -1,0 +1,6 @@
+<html>
+<h1>Online Sessions</h1>
+<% for(var i in sessions){ %>
+	<h2><%= i %> : <a href='/session/<%= sessions[i] %>'><%= sessions[i] %></a></h2>
+<% } %>
+</html>
