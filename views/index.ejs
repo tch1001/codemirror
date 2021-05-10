@@ -15,29 +15,61 @@
 	.banner { background: #ffc; padding: 6px; border-bottom: 2px solid silver; text-align: center }
 </style>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="js/jquery.caret.js"></script>
 <script>
 	var socket;
 	var editor; 
+	var cursor;
 	function connect(){
-		console.log('connecting to server')
 		editor = CodeMirror.fromTextArea(document.getElementById('demotext'), { lineNumbers: true });
 		socket = io();
 		socket.emit('sessId', '<%= sessId %>');
 		socket.on('newCode', (data) => {
 			editor.setValue(data['code']);
+			editor.setCursor(cursor);
 		});
-		document.addEventListener('keypress', (e)=>{
-			console.log(e);
-			setTimeout(function(){updateCode();}, 100);
-		});
+
+		function keyhandler(){
+			console.log('bruh');
+			setTimeout(function(){
+				cursor = editor.getCursor();
+				updateCode();
+			}, 10);
+		}
+		function keypresshandler(e){
+			keyhandler()
+		}
+		function keydownhandler(e){
+			if(	e.key == 'Backspace' ||
+				e.key == 'Enter')
+				keyhandler();
+		}
+
+		document.addEventListener('keypress', keypresshandler);
+		document.addEventListener('keydown', keydownhandler);
 	}
 	function updateCode(){
-		console.log(editor.getValue())
-		socket.emit('updateCode', {code: editor.getValue() } );
+		socket.emit('updateCode', { code: editor.getValue() } );
 	}
 	function retrieveCode(){
-		console.log('retrieveCode');
 		socket.emit('retrieveCode');
+	}
+	function setSelectionRange(input, selectionStart, selectionEnd) {
+		if (input.setSelectionRange) {
+		    input.focus();
+		    input.setSelectionRange(selectionStart, selectionEnd);
+		}
+		else if (input.createTextRange) {
+		    var range = input.createTextRange();
+		    range.collapse(true);
+		    range.moveEnd('character', selectionEnd);
+		    range.moveStart('character', selectionStart);
+		    range.select();
+		}
+	}
+	function setCaretToPos (input, pos) {
+	       setSelectionRange(input, pos, pos);
 	}
 </script>
 <body onload='connect()'>
@@ -50,8 +82,6 @@
 	</textarea>
 </div>
 <div style="margin-left: 220px; background-color: Silver;"> 
-	<button onclick='updateCode()'>Update Code</button><br>
-	<button onclick='retrieveCode()'>Retrieve Code</button><br>
 	Code output 
 </div>
 </body>

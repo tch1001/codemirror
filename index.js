@@ -10,6 +10,7 @@ const io = require('socket.io')(server,{allowEIO3: true});
 
 app.use('/lib', express.static('static/lib'))
 app.use('/mode', express.static('static/mode'))
+app.use('/js', express.static('static/js'))
 app.use('/socket.io', express.static('node_modules/socket.io'))
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname,'views'))
