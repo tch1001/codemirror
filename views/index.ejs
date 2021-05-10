@@ -1,6 +1,5 @@
 <html>
 
-<title>CodeMirror</title>
 <meta charset="utf-8"/>
 
 <link rel=stylesheet href="/lib/codemirror.css">
@@ -9,7 +8,47 @@
 <script src="/mode/javascript/javascript.js"></script>
 
 <style>
-	.CodeMirror { height: 100%; border: 1px solid #ddd; }
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 18px;
+  padding: 20px;
+  width: 150px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 3px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+</style>
+<style>
+	.CodeMirror { height: 100%; border: 2px solid #ddd; }
 	.CodeMirror-scroll { max-height: 100%; }
 	.CodeMirror pre { padding-left: 7px; line-height: 1.25; }
 	.banner { background: #ffc; padding: 6px; border-bottom: 2px solid silver; text-align: center }
@@ -18,6 +57,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="/js/skulpt.js" type="text/javascript"></script>
 <script src="/js/skulpt-stdlib.js" type="text/javascript"></script>
+<script src="/js/python.js" type="text/javascript"></script>
 <script>
 	var socket;
 	var editor; 
@@ -25,7 +65,14 @@
 	var output;
 	function connect(){
 		output = document.getElementById('output')
-		editor = CodeMirror.fromTextArea(document.getElementById('demotext'), { lineNumbers: true });
+		editor = CodeMirror.fromTextArea(
+			document.getElementById('demotext'), 
+			{ mode: { name: "python",
+				version: 3,
+				singleLineStringErrors: true },
+			lineNumbers: true,
+			indentUnit:4 }
+		);
 		socket = io();
 		console.log("session id: ", '<%= sessId %>');
 		socket.emit('sessId', '<%= sessId %>');
@@ -91,20 +138,17 @@
 	}
 </script>
 <body onload='connect()'>
-<h1>harlo <%= sessId %></h1>
 <div style="width: 50%; float: left; background-color: Aqua;">
 	<textarea id='demotext'>
-x=5
-print(x)
-y = input('hello')
-print(y*2)
+for i in range(50):
+	print(i)
 	</textarea>
 </div>
-<div style="margin-left: 220px; background-color: Silver;"> 
-	<button onclick='help()'>Call for help</button>
-	<button onclick='runCode()'>Run</button>
-	<button onclick='output.innerHTML = ""'>Clear Output</button><br>
-	<strong>Code output</strong><br>
-	<p id='output'></p>
+<div style="overflow: scroll; width: 50%; float: left; background-color: grey;">
+	<button class='button' style="background-color: #3daae0" onclick='help()'>Call for Help</button>
+	<button class='button' style="background-color: #45AF50" onclick='runCode()'>Run Code</button>
+	<button class='button' style="background-color: #45AF50" onclick='output.innerHTML = ""'>Clear Output</button>
+	<h2>Code Output</h2>
+	<p style="height: 75%;" id='output'></p>
 </div>
 </body>
