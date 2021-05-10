@@ -16,35 +16,42 @@
 </style>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script>
+	var socket;
+	var editor; 
 	function connect(){
 		console.log('connecting to server')
-		var socket = io();
+		editor = CodeMirror.fromTextArea(document.getElementById('demotext'), { lineNumbers: true });
+		socket = io();
 		socket.emit('sessId', '<%= sessId %>');
+		socket.on('newCode', (data) => {
+			editor.setValue(data['code']);
+		});
+		document.addEventListener('keypress', (e)=>{
+			console.log(e);
+			setTimeout(function(){updateCode();}, 100);
+		});
+	}
+	function updateCode(){
+		console.log(editor.getValue())
+		socket.emit('updateCode', {code: editor.getValue() } );
+	}
+	function retrieveCode(){
+		console.log('retrieveCode');
+		socket.emit('retrieveCode');
 	}
 </script>
 <body onload='connect()'>
 <h1>harlo <%= sessId %></h1>
 <div style="width: 50%; float: left; background-color: Aqua;">
-	<textarea id=demotext>
+	<textarea id='demotext'>
 <!-- Create a simple CodeMirror instance -->
 <link rel="stylesheet" href="lib/codemirror.css">
 <script src="lib/codemirror.js"></script>
-<script>
-	var editor = CodeMirror.fromTextArea(myTextarea, {
-		lineNumbers: true
-	});
-</script>
 	</textarea>
-	<script>
-		var editor = CodeMirror.fromTextArea(document.getElementById("demotext"), {
-			lineNumbers: true,
-			mode: "text/html",
-			matchBrackets: true
-		});
-	</script>
 </div>
 <div style="margin-left: 220px; background-color: Silver;"> 
-	<button value="Run code" onclick='connect()'>Run Code</button><br>
+	<button onclick='updateCode()'>Update Code</button><br>
+	<button onclick='retrieveCode()'>Retrieve Code</button><br>
 	Code output 
 </div>
 </body>
