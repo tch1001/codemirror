@@ -1,6 +1,27 @@
 <html>
 <h1>Online Sessions</h1>
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script>
+	var socket;
+	function connect(){
+		socket = io();
+	}
+	function unhelp(sessId){
+		console.log(sessId)
+		socket.emit('unhelp', sessId);
+	}
+</script>
+<body onload='connect()'>
 <% for(var i in sessions){ %>
-	<h2><%= i %> : <a href='/session/<%= sessions[i] %>'><%= sessions[i] %></a></h2>
+	<h2>
+		<%= i %> : 
+		<a href='/session/<%= sessions[i][0] %>'>
+			<%= sessions[i][0] %>,
+		</a>
+		<% if(sessions[i][1]){ %>
+			<button onclick="unhelp('<%= sessions[i][0] %>')"> Help! </button>
+		<% } %>
+	</h2>
 <% } %>
+</body>
 </html>
