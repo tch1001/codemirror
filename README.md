@@ -1,8 +1,8 @@
 # codemirror
 CodeMirror aims to be an open-source teaching resource. It will consist of:
-1. A realtime collaborative code editor that allows teachers to edit students code
-2. Online python interpreter (only python for now, but after that maybe support other languages)
-3. Automated judging systems, similar to that of informatics olympiads
+1. A realtime collaborative code editor that allows teachers to edit students code (DONE)
+2. Online python interpreter (only python for now, but after that maybe support other languages) (DONE)
+3. Automated judging systems, similar to that of informatics olympiads 
 4. Categorising problems into classrooms and lessons
 
 ## how to run
